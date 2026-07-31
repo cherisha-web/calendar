@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Period & Life Tracker</title>
+    <title>Period & Life Calendar</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
     <style>
         * {
@@ -21,13 +21,13 @@
             --bark: #5c4a3a;
             --muted: #9e8f84;
             --today: #c26b5a;
-            /* new colors */
-            --period: #d9534f;
-            --shower: #5bc0de;
-            --laundry: #95a5a6;
-            --period-light: #f9dedd;
-            --shower-light: #ddf0f7;
-            --laundry-light: #eaecee;
+            /* Background marker colors */
+            --period-bg: #f9dedd;
+            --period-border: #d9534f;
+            --shower-bg: #ddf0f7;
+            --shower-border: #5bc0de;
+            --laundry-bg: #eaecee;
+            --laundry-border: #95a5a6;
         }
 
         body {
@@ -166,55 +166,46 @@
             font-weight: 600;
         }
 
-        /* ----- colored day backgrounds ----- */
-        .day-cell.period {
-            background: var(--period-light);
-            border-color: var(--period);
+        /* ----- Background marker styles ----- */
+        .day-cell.period-bg {
+            background: var(--period-bg);
+            border-color: var(--period-border);
         }
-        .day-cell.period .day-num {
+        .day-cell.period-bg .day-num {
             color: #7a2a28;
         }
 
-        .day-cell.shower {
-            background: var(--shower-light);
-            border-color: var(--shower);
+        .day-cell.shower-bg {
+            background: var(--shower-bg);
+            border-color: var(--shower-border);
         }
-        .day-cell.shower .day-num {
+        .day-cell.shower-bg .day-num {
             color: #1a6b7a;
         }
 
-        .day-cell.laundry {
-            background: var(--laundry-light);
-            border-color: var(--laundry);
+        .day-cell.laundry-bg {
+            background: var(--laundry-bg);
+            border-color: var(--laundry-border);
         }
-        .day-cell.laundry .day-num {
+        .day-cell.laundry-bg .day-num {
             color: #4a5556;
         }
 
-        .day-cell.period.today {
+        /* combined with today */
+        .day-cell.period-bg.today {
             background: #f5c8c6;
             border-color: #c0392b;
         }
-        .day-cell.shower.today {
+        .day-cell.shower-bg.today {
             background: #c8e8f0;
             border-color: #2b8c9e;
         }
-        .day-cell.laundry.today {
+        .day-cell.laundry-bg.today {
             background: #d5d8d9;
             border-color: #6b7a7c;
         }
 
-        .day-cell.period .dot.period-dot {
-            background: var(--period);
-        }
-        .day-cell.shower .dot.shower-dot {
-            background: var(--shower);
-        }
-        .day-cell.laundry .dot.laundry-dot {
-            background: var(--laundry);
-        }
-
-        /* dots */
+        /* Dots */
         .dots {
             display: flex;
             gap: 3px;
@@ -231,21 +222,30 @@
             border-radius: 50%;
             border: 1px solid rgba(255, 255, 255, 0.5);
         }
-        .dot.period-dot {
-            background: var(--period);
+        .dot.sage {
+            background: var(--sage);
         }
-        .dot.shower-dot {
-            background: var(--shower);
+        .dot.blush {
+            background: #d4847a;
         }
-        .dot.laundry-dot {
-            background: var(--laundry);
+        .dot.dusty {
+            background: #9b82a8;
+        }
+        .dot.period {
+            background: var(--period-border);
+        }
+        .dot.shower {
+            background: var(--shower-border);
+        }
+        .dot.laundry {
+            background: var(--laundry-border);
         }
 
         .day-cell.today .dot {
             border-color: rgba(255, 255, 255, 0.7);
         }
 
-        /* panel */
+        /* Panel */
         .panel {
             margin-top: 2rem;
             background: white;
@@ -305,14 +305,23 @@
             color: white;
             flex-shrink: 0;
         }
+        .event-cat-label.personal {
+            background: var(--sage);
+        }
+        .event-cat-label.work {
+            background: #d4847a;
+        }
+        .event-cat-label.social {
+            background: #9b82a8;
+        }
         .event-cat-label.period {
-            background: var(--period);
+            background: var(--period-border);
         }
         .event-cat-label.shower {
-            background: var(--shower);
+            background: var(--shower-border);
         }
         .event-cat-label.laundry {
-            background: var(--laundry);
+            background: var(--laundry-border);
         }
 
         .no-events {
@@ -354,7 +363,7 @@
             width: 100px;
         }
         .add-form select {
-            min-width: 100px;
+            min-width: 130px;
         }
 
         .add-btn {
@@ -385,12 +394,12 @@
             flex-shrink: 0;
         }
         .del-btn:hover {
-            color: var(--period);
+            color: var(--period-border);
         }
 
         .legend {
             display: flex;
-            gap: 1.5rem;
+            gap: 1.2rem;
             margin-top: 1.5rem;
             flex-wrap: wrap;
             padding-top: 1rem;
@@ -399,25 +408,34 @@
         .legend-item {
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 0.8rem;
+            gap: 6px;
+            font-size: 0.75rem;
             color: var(--bark);
             font-weight: 400;
         }
         .legend-dot {
-            width: 14px;
-            height: 14px;
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
             border: 1px solid rgba(0, 0, 0, 0.06);
         }
+        .legend-dot.sage {
+            background: var(--sage);
+        }
+        .legend-dot.blush {
+            background: #d4847a;
+        }
+        .legend-dot.dusty {
+            background: #9b82a8;
+        }
         .legend-dot.period {
-            background: var(--period);
+            background: var(--period-border);
         }
         .legend-dot.shower {
-            background: var(--shower);
+            background: var(--shower-border);
         }
         .legend-dot.laundry {
-            background: var(--laundry);
+            background: var(--laundry-border);
         }
 
         .saved-note {
@@ -446,8 +464,8 @@
             font-family: 'DM Sans', sans-serif;
         }
         .clear-day-btn:hover {
-            border-color: var(--period);
-            color: var(--period);
+            border-color: var(--period-border);
+            color: var(--period-border);
         }
 
         @media (max-width: 480px) {
@@ -469,13 +487,13 @@
                 min-width: 80px;
             }
             .add-form select {
-                min-width: 80px;
+                min-width: 100px;
             }
             .add-form input[type="time"] {
                 width: 85px;
             }
             .legend {
-                gap: 1rem;
+                gap: 0.8rem;
             }
         }
     </style>
@@ -502,15 +520,18 @@
 
         <div class="panel" id="day-panel">
             <div class="panel-date" id="panel-date">Select a day to track</div>
-            <div id="events-list"><div class="no-events">Click any day to add a period, shower, or laundry marker</div></div>
+            <div id="events-list"><div class="no-events">Click any day to add events or markers</div></div>
         </div>
 
         <div id="saved-note" class="saved-note">&#10003; Saved to your device</div>
 
         <div class="legend">
-            <div class="legend-item"><div class="legend-dot period"></div>Period</div>
-            <div class="legend-item"><div class="legend-dot shower"></div>Shower</div>
-            <div class="legend-item"><div class="legend-dot laundry"></div>Wash Clothes</div>
+            <div class="legend-item"><div class="legend-dot sage"></div>Personal</div>
+            <div class="legend-item"><div class="legend-dot blush"></div>Work</div>
+            <div class="legend-item"><div class="legend-dot dusty"></div>Social</div>
+            <div class="legend-item"><div class="legend-dot period"></div>Period (bg)</div>
+            <div class="legend-item"><div class="legend-dot shower"></div>Shower (bg)</div>
+            <div class="legend-item"><div class="legend-dot laundry"></div>Laundry (bg)</div>
         </div>
     </div>
 
@@ -520,11 +541,18 @@
         ];
         const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
+        // All categories with their properties
         const CATEGORIES = {
-            period: { label: 'Period', color: '#d9534f', cssClass: 'period' },
-            shower: { label: 'Shower', color: '#5bc0de', cssClass: 'shower' },
-            laundry: { label: 'Wash Clothes', color: '#95a5a6', cssClass: 'laundry' }
+            personal: { label: 'Personal', color: '#7a9e7e', cssClass: 'personal', bg: false },
+            work: { label: 'Work', color: '#d4847a', cssClass: 'work', bg: false },
+            social: { label: 'Social', color: '#9b82a8', cssClass: 'social', bg: false },
+            period: { label: 'Period', color: '#d9534f', cssClass: 'period', bg: true },
+            shower: { label: 'Shower', color: '#5bc0de', cssClass: 'shower', bg: true },
+            laundry: { label: 'Laundry', color: '#95a5a6', cssClass: 'laundry', bg: true }
         };
+
+        // Priority for background color (higher index = higher priority)
+        const BG_PRIORITY = ['period', 'shower', 'laundry'];
 
         const STORAGE_KEY = 'period_life_calendar_events';
 
@@ -556,10 +584,15 @@
             return events[k] || [];
         }
 
-        function getPrimaryCategory(evs) {
+        // Returns the highest-priority background category for a day, or null
+        function getBackgroundCategory(evs) {
             if (!evs || evs.length === 0) return null;
-            // priority: period > shower > laundry (first in list wins)
-            return evs[0].cat;
+            for (const cat of BG_PRIORITY) {
+                if (evs.some(ev => ev.cat === cat)) {
+                    return cat;
+                }
+            }
+            return null;
         }
 
         function render() {
@@ -581,13 +614,13 @@
                 const k = key(cur.y, cur.m, d);
                 const evs = getDayEvents(cur.y, cur.m, d);
                 const isToday = cur.y === today.getFullYear() && cur.m === today.getMonth() && d === today.getDate();
-                const primary = getPrimaryCategory(evs);
+                const bgCat = getBackgroundCategory(evs);
 
                 const cell = document.createElement('div');
                 let cls = 'day-cell';
                 if (isToday) cls += ' today';
-                if (primary && CATEGORIES[primary]) {
-                    cls += ' ' + CATEGORIES[primary].cssClass;
+                if (bgCat) {
+                    cls += ' ' + bgCat + '-bg';
                 }
                 cell.className = cls;
 
@@ -602,7 +635,7 @@
                     const shown = evs.slice(0, 4);
                     shown.forEach(ev => {
                         const dot = document.createElement('div');
-                        const catClass = ev.cat + '-dot';
+                        const catClass = ev.cat;
                         dot.className = `dot ${catClass}`;
                         dotsEl.appendChild(dot);
                     });
@@ -624,10 +657,9 @@
             if (selected && selected.y === cur.y && selected.m === cur.m) {
                 renderEvents(key(selected.y, selected.m, selected.d));
             } else if (selected) {
-                // selected day is in another month — clear panel
                 document.getElementById('panel-date').innerHTML = 'Select a day to track';
                 document.getElementById('events-list').innerHTML =
-                    `<div class="no-events">Click any day to add a period, shower, or laundry marker</div>`;
+                    `<div class="no-events">Click any day to add events or markers</div>`;
             }
         }
 
@@ -649,57 +681,64 @@
 
             let html = '';
             if (evs.length === 0) {
-                html += `<div class="no-events">No markers — add one below</div>`;
+                html += `<div class="no-events">No events or markers — add one below</div>`;
             } else {
                 evs.forEach((ev, i) => {
-                    const catInfo = CATEGORIES[ev.cat] || CATEGORIES.period;
+                    const catInfo = CATEGORIES[ev.cat] || CATEGORIES.personal;
                     html += `
-                        <div class="event-item">
-                            <div class="event-dot" style="background:${catInfo.color}"></div>
-                            <div class="event-title">${escHtml(ev.title || catInfo.label)}</div>
-                            ${ev.time ? `<div class="event-time">${escHtml(ev.time)}</div>` : ''}
-                            <span class="event-cat-label ${ev.cat}">${catInfo.label}</span>
-                            <button class="del-btn" onclick="delEvent('${k}',${i})" title="Remove">&#10005;</button>
-                        </div>`;
+                            <div class="event-item">
+                                <div class="event-dot" style="background:${catInfo.color}"></div>
+                                <div class="event-title">${escHtml(ev.title || catInfo.label)}</div>
+                                ${ev.time ? `<div class="event-time">${escHtml(ev.time)}</div>` : ''}
+                                <span class="event-cat-label ${ev.cat}">${catInfo.label}</span>
+                                <button class="del-btn" onclick="delEvent('${k}',${i})" title="Remove">&#10005;</button>
+                            </div>`;
                 });
-                // clear-all button
                 html += `
-                    <div style="display:flex;justify-content:flex-end;margin-top:0.25rem;">
-                        <button class="clear-day-btn" onclick="clearDay('${k}')">Clear all</button>
-                    </div>`;
+                        <div style="display:flex;justify-content:flex-end;margin-top:0.25rem;">
+                            <button class="clear-day-btn" onclick="clearDay('${k}')">Clear all</button>
+                        </div>`;
             }
 
             html += `
-                <div class="add-form">
-                    <input type="text" id="ev-title" placeholder="Note (optional)" />
-                    <input type="time" id="ev-time" />
-                    <select id="ev-cat">
-                        <option value="period">🩸 Period</option>
-                        <option value="shower">🚿 Shower</option>
-                        <option value="laundry">🧺 Wash Clothes</option>
-                    </select>
-                    <button class="add-btn" onclick="addEvent('${k}')">Add</button>
-                </div>`;
+                    <div class="add-form">
+                        <input type="text" id="ev-title" placeholder="Note (optional)" />
+                        <input type="time" id="ev-time" />
+                        <select id="ev-cat">
+                            <option value="personal">🌿 Personal</option>
+                            <option value="work">🌸 Work</option>
+                            <option value="social">💜 Social</option>
+                            <option value="period">🩸 Period</option>
+                            <option value="shower">🚿 Shower</option>
+                            <option value="laundry">🧺 Wash Clothes</option>
+                        </select>
+                        <button class="add-btn" onclick="addEvent('${k}')">Add</button>
+                    </div>`;
 
             list.innerHTML = html;
 
             const titleInput = document.getElementById('ev-title');
+            const catSelect = document.getElementById('ev-cat');
             if (titleInput) {
                 titleInput.addEventListener('keydown', e => {
                     if (e.key === 'Enter') addEvent(k);
                 });
-                // auto-fill with category label when category changes
-                const catSelect = document.getElementById('ev-cat');
                 if (catSelect) {
+                    // auto-fill title when category changes (if empty)
                     catSelect.addEventListener('change', () => {
-                        const val = catSelect.value;
-                        if (CATEGORIES[val] && !titleInput.value.trim()) {
-                            titleInput.value = CATEGORIES[val].label;
+                        if (!titleInput.value.trim()) {
+                            const val = catSelect.value;
+                            if (CATEGORIES[val]) {
+                                titleInput.value = CATEGORIES[val].label;
+                            }
                         }
                     });
-                    // initial auto-fill
+                    // initial fill
                     if (!titleInput.value.trim()) {
-                        titleInput.value = CATEGORIES[catSelect.value].label;
+                        const val = catSelect.value;
+                        if (CATEGORIES[val]) {
+                            titleInput.value = CATEGORIES[val].label;
+                        }
                     }
                 }
                 setTimeout(() => titleInput.focus(), 50);
@@ -711,11 +750,10 @@
             const timeEl = document.getElementById('ev-time');
             const catEl = document.getElementById('ev-cat');
             let title = titleEl ? titleEl.value.trim() : '';
-            const cat = catEl ? catEl.value : 'period';
+            const cat = catEl ? catEl.value : 'personal';
 
-            // if no title, use category label
             if (!title) {
-                title = CATEGORIES[cat] ? CATEGORIES[cat].label : 'Period';
+                title = CATEGORIES[cat] ? CATEGORIES[cat].label : 'Event';
             }
 
             const rawTime = timeEl ? timeEl.value : '';
@@ -740,7 +778,7 @@
         function clearDay(k) {
             if (!events[k]) return;
             if (events[k].length === 0) return;
-            if (!confirm('Remove all markers for this day?')) return;
+            if (!confirm('Remove all markers and events for this day?')) return;
             delete events[k];
             saveEvents();
             render();
@@ -771,13 +809,11 @@
         // ---- init ----
         loadEvents();
 
-        // if today has no events, pre-populate with a default? No, let user decide.
-        // but we want to select today by default
+        // Select today by default
         const todayKey = key(today.getFullYear(), today.getMonth(), today.getDate());
         selected = { y: today.getFullYear(), m: today.getMonth(), d: today.getDate() };
 
         render();
-        // re-render the panel for today
         setTimeout(() => {
             renderEvents(todayKey);
             const dow = new Date(today.getFullYear(), today.getMonth(), today.getDate()).getDay();
