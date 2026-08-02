@@ -13,21 +13,30 @@
         }
 
         :root {
-            --sage: #7a9e7e;
-            --blush: #e8c4b8;
-            --dusty: #c9b5d0;
             --cream: #faf7f2;
             --warm: #f2ede4;
             --bark: #5c4a3a;
             --muted: #9e8f84;
             --today: #c26b5a;
+            
+            /* Regular event colors */
+            --personal: #4CAF50;
+            --work: #FFC107;
+            --social: #9C27B0;
+            
             /* Background marker colors */
-            --period-bg: #f9dedd;
-            --period-border: #d9534f;
-            --shower-bg: #ddf0f7;
-            --shower-border: #5bc0de;
-            --laundry-bg: #eaecee;
-            --laundry-border: #95a5a6;
+            --period: #d9534f;
+            --shower: #95a5a6;
+            --laundry: #5bc0de;
+            --orange: #ff9800;
+            --pink: #e91e8c;
+            
+            /* Background marker light versions */
+            --period-light: #f9dedd;
+            --shower-light: #eaecee;
+            --laundry-light: #ddf0f7;
+            --orange-light: #fff3e0;
+            --pink-light: #fce4ec;
         }
 
         body {
@@ -61,7 +70,7 @@
 
         .month-name em {
             font-style: italic;
-            color: var(--sage);
+            color: #7a9e7e;
         }
 
         .year-tag {
@@ -94,7 +103,7 @@
         }
         .nav-btn:hover {
             background: var(--warm);
-            border-color: var(--sage);
+            border-color: #7a9e7e;
         }
 
         .weekdays {
@@ -138,7 +147,7 @@
 
         .day-cell:hover {
             background: var(--warm);
-            border-color: var(--sage);
+            border-color: #7a9e7e;
             transform: translateY(-1px);
         }
         .day-cell.empty {
@@ -168,27 +177,43 @@
 
         /* ----- Background marker styles ----- */
         .day-cell.period-bg {
-            background: var(--period-bg);
-            border-color: var(--period-border);
+            background: var(--period-light);
+            border-color: var(--period);
         }
         .day-cell.period-bg .day-num {
             color: #7a2a28;
         }
 
         .day-cell.shower-bg {
-            background: var(--shower-bg);
-            border-color: var(--shower-border);
+            background: var(--shower-light);
+            border-color: var(--shower);
         }
         .day-cell.shower-bg .day-num {
-            color: #1a6b7a;
+            color: #4a5556;
         }
 
         .day-cell.laundry-bg {
-            background: var(--laundry-bg);
-            border-color: var(--laundry-border);
+            background: var(--laundry-light);
+            border-color: var(--laundry);
         }
         .day-cell.laundry-bg .day-num {
-            color: #4a5556;
+            color: #1a6b7a;
+        }
+
+        .day-cell.orange-bg {
+            background: var(--orange-light);
+            border-color: var(--orange);
+        }
+        .day-cell.orange-bg .day-num {
+            color: #7a4a0a;
+        }
+
+        .day-cell.pink-bg {
+            background: var(--pink-light);
+            border-color: var(--pink);
+        }
+        .day-cell.pink-bg .day-num {
+            color: #7a1a4a;
         }
 
         /* combined with today */
@@ -197,12 +222,20 @@
             border-color: #c0392b;
         }
         .day-cell.shower-bg.today {
+            background: #d5d8d9;
+            border-color: #6b7a7c;
+        }
+        .day-cell.laundry-bg.today {
             background: #c8e8f0;
             border-color: #2b8c9e;
         }
-        .day-cell.laundry-bg.today {
-            background: #d5d8d9;
-            border-color: #6b7a7c;
+        .day-cell.orange-bg.today {
+            background: #ffe0b2;
+            border-color: #e65100;
+        }
+        .day-cell.pink-bg.today {
+            background: #f8bbd0;
+            border-color: #ad1457;
         }
 
         /* Dots */
@@ -217,28 +250,34 @@
         }
 
         .dot {
-            width: 6px;
-            height: 6px;
+            width: 7px;
+            height: 7px;
             border-radius: 50%;
             border: 1px solid rgba(255, 255, 255, 0.5);
         }
-        .dot.sage {
-            background: var(--sage);
+        .dot.personal {
+            background: var(--personal);
         }
-        .dot.blush {
-            background: #d4847a;
+        .dot.work {
+            background: var(--work);
         }
-        .dot.dusty {
-            background: #9b82a8;
+        .dot.social {
+            background: var(--social);
         }
         .dot.period {
-            background: var(--period-border);
+            background: var(--period);
         }
         .dot.shower {
-            background: var(--shower-border);
+            background: var(--shower);
         }
         .dot.laundry {
-            background: var(--laundry-border);
+            background: var(--laundry);
+        }
+        .dot.orange {
+            background: var(--orange);
+        }
+        .dot.pink {
+            background: var(--pink);
         }
 
         .day-cell.today .dot {
@@ -262,15 +301,29 @@
         }
         .panel-date span {
             font-style: italic;
-            color: var(--sage);
+            color: #7a9e7e;
             font-size: 1rem;
+        }
+
+        .section-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--muted);
+            margin: 1rem 0 0.5rem 0;
+            padding-bottom: 0.3rem;
+            border-bottom: 1px solid #f0e9e0;
+            font-weight: 500;
+        }
+        .section-title:first-of-type {
+            margin-top: 0;
         }
 
         .event-item {
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 0.6rem 0;
+            padding: 0.5rem 0;
             border-bottom: 1px solid #f0e9e0;
         }
         .event-item:last-child {
@@ -296,7 +349,7 @@
             white-space: nowrap;
         }
         .event-cat-label {
-            font-size: 0.6rem;
+            font-size: 0.55rem;
             text-transform: uppercase;
             letter-spacing: 0.06em;
             padding: 2px 8px;
@@ -306,22 +359,29 @@
             flex-shrink: 0;
         }
         .event-cat-label.personal {
-            background: var(--sage);
+            background: var(--personal);
         }
         .event-cat-label.work {
-            background: #d4847a;
+            background: var(--work);
+            color: #333;
         }
         .event-cat-label.social {
-            background: #9b82a8;
+            background: var(--social);
         }
         .event-cat-label.period {
-            background: var(--period-border);
+            background: var(--period);
         }
         .event-cat-label.shower {
-            background: var(--shower-border);
+            background: var(--shower);
         }
         .event-cat-label.laundry {
-            background: var(--laundry-border);
+            background: var(--laundry);
+        }
+        .event-cat-label.orange {
+            background: var(--orange);
+        }
+        .event-cat-label.pink {
+            background: var(--pink);
         }
 
         .no-events {
@@ -329,7 +389,7 @@
             color: var(--muted);
             font-style: italic;
             text-align: center;
-            padding: 1.5rem 0;
+            padding: 1rem 0;
         }
 
         .add-form {
@@ -353,7 +413,7 @@
         }
         .add-form input:focus,
         .add-form select:focus {
-            border-color: var(--sage);
+            border-color: #7a9e7e;
         }
         .add-form input[type="text"] {
             flex: 1;
@@ -367,7 +427,7 @@
         }
 
         .add-btn {
-            background: var(--sage);
+            background: #7a9e7e;
             color: white;
             border: none;
             border-radius: 8px;
@@ -394,7 +454,7 @@
             flex-shrink: 0;
         }
         .del-btn:hover {
-            color: var(--period-border);
+            color: var(--period);
         }
 
         .legend {
@@ -419,23 +479,29 @@
             border-radius: 50%;
             border: 1px solid rgba(0, 0, 0, 0.06);
         }
-        .legend-dot.sage {
-            background: var(--sage);
+        .legend-dot.personal {
+            background: var(--personal);
         }
-        .legend-dot.blush {
-            background: #d4847a;
+        .legend-dot.work {
+            background: var(--work);
         }
-        .legend-dot.dusty {
-            background: #9b82a8;
+        .legend-dot.social {
+            background: var(--social);
         }
         .legend-dot.period {
-            background: var(--period-border);
+            background: var(--period);
         }
         .legend-dot.shower {
-            background: var(--shower-border);
+            background: var(--shower);
         }
         .legend-dot.laundry {
-            background: var(--laundry-border);
+            background: var(--laundry);
+        }
+        .legend-dot.orange {
+            background: var(--orange);
+        }
+        .legend-dot.pink {
+            background: var(--pink);
         }
 
         .saved-note {
@@ -464,8 +530,8 @@
             font-family: 'DM Sans', sans-serif;
         }
         .clear-day-btn:hover {
-            border-color: var(--period-border);
-            color: var(--period-border);
+            border-color: var(--period);
+            color: var(--period);
         }
 
         @media (max-width: 480px) {
@@ -526,12 +592,14 @@
         <div id="saved-note" class="saved-note">&#10003; Saved to your device</div>
 
         <div class="legend">
-            <div class="legend-item"><div class="legend-dot sage"></div>Personal</div>
-            <div class="legend-item"><div class="legend-dot blush"></div>Work</div>
-            <div class="legend-item"><div class="legend-dot dusty"></div>Social</div>
-            <div class="legend-item"><div class="legend-dot period"></div>Period (bg)</div>
-            <div class="legend-item"><div class="legend-dot shower"></div>Shower (bg)</div>
-            <div class="legend-item"><div class="legend-dot laundry"></div>Laundry (bg)</div>
+            <div class="legend-item"><div class="legend-dot personal"></div>Personal</div>
+            <div class="legend-item"><div class="legend-dot work"></div>Work</div>
+            <div class="legend-item"><div class="legend-dot social"></div>Social</div>
+            <div class="legend-item"><div class="legend-dot period"></div>Period</div>
+            <div class="legend-item"><div class="legend-dot shower"></div>Shower</div>
+            <div class="legend-item"><div class="legend-dot laundry"></div>Laundry</div>
+            <div class="legend-item"><div class="legend-dot orange"></div>Orange</div>
+            <div class="legend-item"><div class="legend-dot pink"></div>Pink</div>
         </div>
     </div>
 
@@ -543,16 +611,18 @@
 
         // All categories with their properties
         const CATEGORIES = {
-            personal: { label: 'Personal', color: '#7a9e7e', cssClass: 'personal', bg: false },
-            work: { label: 'Work', color: '#d4847a', cssClass: 'work', bg: false },
-            social: { label: 'Social', color: '#9b82a8', cssClass: 'social', bg: false },
-            period: { label: 'Period', color: '#d9534f', cssClass: 'period', bg: true },
-            shower: { label: 'Shower', color: '#5bc0de', cssClass: 'shower', bg: true },
-            laundry: { label: 'Laundry', color: '#95a5a6', cssClass: 'laundry', bg: true }
+            personal: { label: 'Personal', color: '#4CAF50', cssClass: 'personal', isBackground: false },
+            work: { label: 'Work', color: '#FFC107', cssClass: 'work', isBackground: false },
+            social: { label: 'Social', color: '#9C27B0', cssClass: 'social', isBackground: false },
+            period: { label: 'Period', color: '#d9534f', cssClass: 'period', isBackground: true },
+            shower: { label: 'Shower', color: '#95a5a6', cssClass: 'shower', isBackground: true },
+            laundry: { label: 'Laundry', color: '#5bc0de', cssClass: 'laundry', isBackground: true },
+            orange: { label: 'Orange', color: '#ff9800', cssClass: 'orange', isBackground: true },
+            pink: { label: 'Pink', color: '#e91e8c', cssClass: 'pink', isBackground: true }
         };
 
-        // Priority for background color (higher index = higher priority)
-        const BG_PRIORITY = ['period', 'shower', 'laundry'];
+        // Background categories (for the "no priority" rule)
+        const BG_CATEGORIES = ['period', 'shower', 'laundry', 'orange', 'pink'];
 
         const STORAGE_KEY = 'period_life_calendar_events';
 
@@ -584,12 +654,13 @@
             return events[k] || [];
         }
 
-        // Returns the highest-priority background category for a day, or null
+        // Returns the last background category added to a day, or null
         function getBackgroundCategory(evs) {
             if (!evs || evs.length === 0) return null;
-            for (const cat of BG_PRIORITY) {
-                if (evs.some(ev => ev.cat === cat)) {
-                    return cat;
+            // Find the last background marker in the array
+            for (let i = evs.length - 1; i >= 0; i--) {
+                if (BG_CATEGORIES.includes(evs[i].cat)) {
+                    return evs[i].cat;
                 }
             }
             return null;
@@ -679,38 +750,77 @@
             const list = document.getElementById('events-list');
             const evs = events[k] || [];
 
+            // Split into regular events and background markers
+            const regularEvents = evs.filter(ev => !BG_CATEGORIES.includes(ev.cat));
+            const backgroundMarkers = evs.filter(ev => BG_CATEGORIES.includes(ev.cat));
+
             let html = '';
-            if (evs.length === 0) {
-                html += `<div class="no-events">No events or markers — add one below</div>`;
+
+            // Regular Events section
+            html += `<div class="section-title">Regular Events</div>`;
+            if (regularEvents.length === 0) {
+                html += `<div class="no-events">No regular events</div>`;
             } else {
-                evs.forEach((ev, i) => {
+                regularEvents.forEach((ev, i) => {
                     const catInfo = CATEGORIES[ev.cat] || CATEGORIES.personal;
+                    // Find the actual index in the full events array
+                    const actualIndex = evs.indexOf(ev);
                     html += `
                             <div class="event-item">
                                 <div class="event-dot" style="background:${catInfo.color}"></div>
                                 <div class="event-title">${escHtml(ev.title || catInfo.label)}</div>
                                 ${ev.time ? `<div class="event-time">${escHtml(ev.time)}</div>` : ''}
                                 <span class="event-cat-label ${ev.cat}">${catInfo.label}</span>
-                                <button class="del-btn" onclick="delEvent('${k}',${i})" title="Remove">&#10005;</button>
+                                <button class="del-btn" onclick="delEvent('${k}',${actualIndex})" title="Remove">&#10005;</button>
                             </div>`;
                 });
+            }
+
+            // Background Markers section
+            html += `<div class="section-title">Background Markers</div>`;
+            if (backgroundMarkers.length === 0) {
+                html += `<div class="no-events">No background markers</div>`;
+            } else {
+                backgroundMarkers.forEach((ev, i) => {
+                    const catInfo = CATEGORIES[ev.cat] || CATEGORIES.period;
+                    const actualIndex = evs.indexOf(ev);
+                    html += `
+                            <div class="event-item">
+                                <div class="event-dot" style="background:${catInfo.color}"></div>
+                                <div class="event-title">${escHtml(ev.title || catInfo.label)}</div>
+                                ${ev.time ? `<div class="event-time">${escHtml(ev.time)}</div>` : ''}
+                                <span class="event-cat-label ${ev.cat}">${catInfo.label}</span>
+                                <button class="del-btn" onclick="delEvent('${k}',${actualIndex})" title="Remove">&#10005;</button>
+                            </div>`;
+                });
+            }
+
+            // Clear all button
+            if (evs.length > 0) {
                 html += `
-                        <div style="display:flex;justify-content:flex-end;margin-top:0.25rem;">
+                        <div style="display:flex;justify-content:flex-end;margin-top:0.75rem;">
                             <button class="clear-day-btn" onclick="clearDay('${k}')">Clear all</button>
                         </div>`;
             }
 
+            // Add form
             html += `
                     <div class="add-form">
                         <input type="text" id="ev-title" placeholder="Note (optional)" />
                         <input type="time" id="ev-time" />
                         <select id="ev-cat">
-                            <option value="personal">🌿 Personal</option>
-                            <option value="work">🌸 Work</option>
-                            <option value="social">💜 Social</option>
-                            <option value="period">🩸 Period</option>
-                            <option value="shower">🚿 Shower</option>
-                            <option value="laundry">🧺 Wash Clothes</option>
+                            <optgroup label="Regular Events">
+                                <option value="personal">🌿 Personal</option>
+                                <option value="work">💼 Work</option>
+                                <option value="social">💜 Social</option>
+                            </optgroup>
+                            <optgroup label="Background Markers">
+                                <option value="period">🩸 Period</option>
+                                <option value="shower">🚿 Shower</option>
+                                <option value="laundry">🧺 Laundry</option>
+                                <option value="orange">🟠 Orange</option>
+                                <option value="pink">🩷 Pink</option>
+                            </optgroup>
                         </select>
                         <button class="add-btn" onclick="addEvent('${k}')">Add</button>
                     </div>`;
@@ -724,7 +834,7 @@
                     if (e.key === 'Enter') addEvent(k);
                 });
                 if (catSelect) {
-                    // auto-fill title when category changes (if empty)
+                    // Only auto-fill if empty
                     catSelect.addEventListener('change', () => {
                         if (!titleInput.value.trim()) {
                             const val = catSelect.value;
@@ -733,7 +843,7 @@
                             }
                         }
                     });
-                    // initial fill
+                    // Initial fill
                     if (!titleInput.value.trim()) {
                         const val = catSelect.value;
                         if (CATEGORIES[val]) {
